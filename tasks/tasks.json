@@ -1,0 +1,166 @@
+{
+  "project": "FullStack Shop MVP",
+  "stack": "Next.js + Convex + Clerk + Stripe",
+  "notes": [
+    "Convex auto-generates _id for all documents — never define id fields manually in schema",
+    "Convex schema uses v.id('tableName') for foreign key references",
+    "Stripe Webhook must verify signature before processing",
+    "Protected routes (/cart, /orders) require Clerk auth via middleware"
+  ],
+  "tasks": [
+    {
+      "id": "T01",
+      "title": "프로젝트 기반 설정",
+      "status": "done",
+      "description": "Next.js + Convex + Clerk 초기 연동 완료",
+      "subtasks": [
+        { "id": "T01-1", "title": "Next.js 프로젝트 생성", "status": "done" },
+        { "id": "T01-2", "title": "Convex 초기화 및 연동", "status": "done" },
+        { "id": "T01-3", "title": "Clerk 설치 및 ConvexProviderWithClerk 연결", "status": "done" },
+        { "id": "T01-4", "title": "Tailwind CSS 설정", "status": "done" },
+        { "id": "T01-5", "title": "환경변수 설정 (.env.local)", "status": "done" }
+      ]
+    },
+    {
+      "id": "T02",
+      "title": "Convex 데이터베이스 스키마 정의",
+      "status": "pending",
+      "description": "convex/schema.ts에 전체 테이블 정의. Convex가 _id를 자동생성하므로 id 필드 미포함.",
+      "subtasks": [
+        {
+          "id": "T02-1",
+          "title": "users 테이블 스키마",
+          "status": "pending",
+          "fields": "clerkId, email, name, imageUrl, role('user'|'admin')"
+        },
+        {
+          "id": "T02-2",
+          "title": "products 테이블 스키마",
+          "status": "pending",
+          "fields": "name, description, price(number), imageUrl, stock(number)"
+        },
+        {
+          "id": "T02-3",
+          "title": "cartItems 테이블 스키마",
+          "status": "pending",
+          "fields": "userId(v.id('users')), productId(v.id('products')), quantity(number)"
+        },
+        {
+          "id": "T02-4",
+          "title": "orders 테이블 스키마",
+          "status": "pending",
+          "fields": "userId(v.id('users')), stripeSessionId, status('pending'|'paid'|'cancelled'), totalAmount(number)"
+        },
+        {
+          "id": "T02-5",
+          "title": "orderItems 테이블 스키마",
+          "status": "pending",
+          "fields": "orderId(v.id('orders')), productId(v.id('products')), quantity(number), price(number)"
+        }
+      ]
+    },
+    {
+      "id": "T03",
+      "title": "인증 (Clerk)",
+      "status": "partial",
+      "description": "기본 로그인/로그아웃은 완료. 보호 라우트 미들웨어 확장 필요.",
+      "subtasks": [
+        { "id": "T03-1", "title": "로그인 / 로그아웃 / 회원가입 UI", "status": "done" },
+        { "id": "T03-2", "title": "users.store mutation으로 Convex users 테이블 동기화", "status": "done" },
+        { "id": "T03-3", "title": "middleware에서 /cart, /orders 보호 라우트 추가", "status": "pending" }
+      ]
+    },
+    {
+      "id": "T04",
+      "title": "상품 백엔드 (Convex)",
+      "status": "pending",
+      "subtasks": [
+        { "id": "T04-1", "title": "convex/products.ts — listProducts query (전체 목록)", "status": "pending" },
+        { "id": "T04-2", "title": "convex/products.ts — getProduct query (단건 조회)", "status": "pending" },
+        { "id": "T04-3", "title": "convex/products.ts — seed mutation (초기 상품 데이터 삽입)", "status": "pending" }
+      ]
+    },
+    {
+      "id": "T05",
+      "title": "상품 프론트엔드",
+      "status": "pending",
+      "subtasks": [
+        { "id": "T05-1", "title": "app/page.tsx — 상품 목록 페이지 (카드 그리드)", "status": "pending" },
+        { "id": "T05-2", "title": "app/products/[id]/page.tsx — 상품 상세 페이지", "status": "pending" },
+        { "id": "T05-3", "title": "components/ProductCard.tsx — 상품 카드 컴포넌트", "status": "pending" }
+      ]
+    },
+    {
+      "id": "T06",
+      "title": "장바구니 백엔드 (Convex)",
+      "status": "pending",
+      "subtasks": [
+        { "id": "T06-1", "title": "convex/cart.ts — getCart query (현재 유저 장바구니)", "status": "pending" },
+        { "id": "T06-2", "title": "convex/cart.ts — addToCart mutation", "status": "pending" },
+        { "id": "T06-3", "title": "convex/cart.ts — updateQuantity mutation", "status": "pending" },
+        { "id": "T06-4", "title": "convex/cart.ts — removeFromCart mutation", "status": "pending" },
+        { "id": "T06-5", "title": "convex/cart.ts — clearCart mutation (결제 후 호출용)", "status": "pending" }
+      ]
+    },
+    {
+      "id": "T07",
+      "title": "장바구니 프론트엔드",
+      "status": "pending",
+      "subtasks": [
+        { "id": "T07-1", "title": "app/cart/page.tsx — 장바구니 페이지", "status": "pending" },
+        { "id": "T07-2", "title": "components/CartItem.tsx — 아이템 수량 변경/삭제 UI", "status": "pending" },
+        { "id": "T07-3", "title": "헤더에 장바구니 아이콘 + 아이템 수 배지 표시", "status": "pending" }
+      ]
+    },
+    {
+      "id": "T08",
+      "title": "Stripe 결제 연동",
+      "status": "pending",
+      "description": "Stripe Checkout Session 생성 → Webhook으로 결제 확인 → 주문 상태 업데이트",
+      "subtasks": [
+        { "id": "T08-1", "title": "Stripe 패키지 설치 (stripe, @stripe/stripe-js)", "status": "pending" },
+        { "id": "T08-2", "title": "환경변수 추가: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY", "status": "pending" },
+        { "id": "T08-3", "title": "app/api/checkout/route.ts — Checkout Session 생성 API", "status": "pending" },
+        { "id": "T08-4", "title": "app/api/webhook/route.ts — Stripe Webhook 처리 (서명 검증 필수)", "status": "pending" },
+        { "id": "T08-5", "title": "Webhook에서 checkout.session.completed 이벤트로 주문 생성", "status": "pending" },
+        { "id": "T08-6", "title": "app/cart/page.tsx — '결제하기' 버튼 → Checkout Session API 호출", "status": "pending" }
+      ]
+    },
+    {
+      "id": "T09",
+      "title": "주문 백엔드 (Convex)",
+      "status": "pending",
+      "subtasks": [
+        { "id": "T09-1", "title": "convex/orders.ts — createOrder mutation (Webhook에서 호출)", "status": "pending" },
+        { "id": "T09-2", "title": "convex/orders.ts — getMyOrders query (유저별 주문 목록)", "status": "pending" },
+        { "id": "T09-3", "title": "convex/orders.ts — updateOrderStatus mutation", "status": "pending" }
+      ]
+    },
+    {
+      "id": "T10",
+      "title": "주문 내역 프론트엔드",
+      "status": "pending",
+      "subtasks": [
+        { "id": "T10-1", "title": "app/orders/page.tsx — 주문 목록 (날짜, 금액, 상태)", "status": "pending" }
+      ]
+    },
+    {
+      "id": "T11",
+      "title": "결제 결과 페이지",
+      "status": "pending",
+      "subtasks": [
+        { "id": "T11-1", "title": "app/success/page.tsx — 결제 성공 안내", "status": "pending" },
+        { "id": "T11-2", "title": "app/cancel/page.tsx — 결제 취소 안내", "status": "pending" }
+      ]
+    },
+    {
+      "id": "T12",
+      "title": "공통 UI 컴포넌트 및 레이아웃",
+      "status": "pending",
+      "subtasks": [
+        { "id": "T12-1", "title": "app/layout.tsx — 공통 헤더 (로고, 장바구니, UserButton)", "status": "pending" },
+        { "id": "T12-2", "title": "components/Header.tsx — 분리된 헤더 컴포넌트", "status": "pending" }
+      ]
+    }
+  ]
+}

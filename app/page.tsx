@@ -2,6 +2,7 @@
 
 import {
   Authenticated,
+  AuthLoading,
   Unauthenticated,
   useMutation,
   useQuery,
@@ -23,6 +24,9 @@ export default function Home() {
         <h1 className="text-4xl font-bold text-center">
           Convex + Next.js + Clerk
         </h1>
+        <AuthLoading>
+          <div className="mx-auto">Loading...</div>
+        </AuthLoading>
         <Authenticated>
           <Content />
         </Authenticated>

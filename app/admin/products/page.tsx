@@ -5,6 +5,7 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import ImageUpload from "@/components/ImageUpload";
+import ConfirmModal from "@/components/ConfirmModal";
 
 type Product = {
   _id: Id<"products">;
@@ -45,6 +46,7 @@ export default function AdminProductsPage() {
   const [form, setForm] = useState<FormState>(emptyForm);
   const [saving, setSaving] = useState(false);
   const [deletingId, setDeletingId] = useState<Id<"products"> | null>(null);
+  const [confirmTarget, setConfirmTarget] = useState<{ id: Id<"products">; name: string } | null>(null);
 
   const openCreate = () => {
     setEditingId(null);
@@ -91,11 +93,12 @@ export default function AdminProductsPage() {
     }
   };
 
-  const handleDelete = async (id: Id<"products">) => {
-    if (!confirm("정말 삭제하시겠습니까?")) return;
-    setDeletingId(id);
+  const handleDeleteConfirm = async () => {
+    if (!confirmTarget) return;
+    setDeletingId(confirmTarget.id);
     try {
-      await deleteProduct({ id });
+      await deleteProduct({ id: confirmTarget.id });
+      setConfirmTarget(null);
     } finally {
       setDeletingId(null);
     }
@@ -161,7 +164,7 @@ export default function AdminProductsPage() {
                         수정
                       </button>
                       <button
-                        onClick={() => handleDelete(p._id)}
+                        onClick={() => setConfirmTarget({ id: p._id, name: p.name })}
                         disabled={deletingId === p._id}
                         className="px-3 py-1.5 text-xs border border-red-200 text-red-500 rounded-lg hover:bg-red-50 transition-colors disabled:opacity-50"
                       >
@@ -182,6 +185,17 @@ export default function AdminProductsPage() {
           </table>
         </div>
       )}
+
+      {/* 삭제 확인 모달 */}
+      <ConfirmModal
+        open={confirmTarget !== null}
+        title="상품 삭제"
+        message={`"${confirmTarget?.name}" 상품을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.`}
+        confirmLabel="삭제"
+        loading={deletingId !== null}
+        onConfirm={handleDeleteConfirm}
+        onCancel={() => setConfirmTarget(null)}
+      />
 
       {/* 폼 모달 */}
       {showForm && (

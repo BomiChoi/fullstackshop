@@ -7,9 +7,9 @@ import { api } from "@/convex/_generated/api";
 
 function CartBadge() {
   const { isSignedIn } = useUser();
-  const cartItems = useQuery(api.cart.getCart);
+  const cartItems = useQuery(api.cart.getCart, isSignedIn ? {} : "skip");
 
-  const itemCount = isSignedIn && cartItems
+  const itemCount = cartItems
     ? cartItems.reduce((sum, item) => sum + item.quantity, 0)
     : 0;
 

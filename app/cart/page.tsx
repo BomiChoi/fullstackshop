@@ -4,9 +4,11 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import CartItem from "@/components/CartItem";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
   const cartItems = useQuery(api.cart.getCart);
+  const router = useRouter();
 
   if (cartItems === undefined) {
     return (
@@ -24,14 +26,8 @@ export default function CartPage() {
     return sum + (item.product?.price ?? 0) * item.quantity;
   }, 0);
 
-  const handleCheckout = async () => {
-    const res = await fetch("/api/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: cartItems }),
-    });
-    const { url } = await res.json();
-    if (url) window.location.href = url;
+  const handleCheckout = () => {
+    router.push("/checkout");
   };
 
   return (

@@ -29,16 +29,26 @@ export default defineSchema({
 
   orders: defineTable({
     userId: v.id("users"),
-    stripeSessionId: v.string(),
+    stripeSessionId: v.optional(v.string()),  // legacy
+    paymentKey: v.optional(v.string()),        // Toss paymentKey
+    orderId: v.optional(v.string()),           // Toss orderId (merchant-generated)
     status: v.union(
       v.literal("pending"),
       v.literal("paid"),
       v.literal("cancelled")
     ),
     totalAmount: v.number(),
+    shippingInfo: v.optional(v.object({
+      recipientName: v.string(),
+      phone: v.string(),
+      zipcode: v.string(),
+      address: v.string(),
+      detailAddress: v.string(),
+    })),
   })
     .index("byUserId", ["userId"])
-    .index("byStripeSessionId", ["stripeSessionId"]),
+    .index("byStripeSessionId", ["stripeSessionId"])
+    .index("byPaymentKey", ["paymentKey"]),
 
   orderItems: defineTable({
     orderId: v.id("orders"),

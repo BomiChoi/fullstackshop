@@ -98,6 +98,18 @@ export default function OrdersPage() {
                 ))}
               </div>
 
+              {order.shippingInfo && (
+                <div className="border-t border-gray-100 pt-3 mb-3">
+                  <p className="text-xs font-medium text-gray-500 mb-1.5">배송 정보</p>
+                  <p className="text-sm text-gray-800">
+                    {order.shippingInfo.recipientName} · {order.shippingInfo.phone}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    [{order.shippingInfo.zipcode}] {order.shippingInfo.address} {order.shippingInfo.detailAddress}
+                  </p>
+                </div>
+              )}
+
               <div className="border-t border-gray-100 pt-3 flex justify-between items-center">
                 <span className="text-sm text-gray-500">총 결제 금액</span>
                 <span className="font-bold text-gray-900">

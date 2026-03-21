@@ -14,7 +14,12 @@ export const getCart = query({
     const itemsWithProducts = await Promise.all(
       items.map(async (item) => {
         const product = await ctx.db.get(item.productId);
-        return { ...item, product };
+        if (!product) return { ...item, product: null };
+        let imageUrl = product.imageUrl ?? "";
+        if (product.storageId) {
+          imageUrl = (await ctx.storage.getUrl(product.storageId)) ?? imageUrl;
+        }
+        return { ...item, product: { ...product, imageUrl } };
       })
     );
 

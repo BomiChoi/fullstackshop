@@ -4,7 +4,7 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useParams, useRouter } from "next/navigation";
-import { useUser } from "@clerk/nextjs";
+import { useClerk, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 
 export default function ProductDetailPage() {
@@ -14,6 +14,7 @@ export default function ProductDetailPage() {
   });
   const addToCart = useMutation(api.cart.addToCart);
   const { isSignedIn } = useUser();
+  const { openSignIn } = useClerk();
   const router = useRouter();
 
   if (product === undefined) {
@@ -42,7 +43,7 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = async () => {
     if (!isSignedIn) {
-      router.push("/sign-in");
+      openSignIn();
       return;
     }
     await addToCart({ productId: product._id, quantity: 1 });

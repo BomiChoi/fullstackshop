@@ -56,10 +56,15 @@ export const getMyOrders = query({
           .collect();
 
         const itemsWithProducts = await Promise.all(
-          items.map(async (item) => ({
-            ...item,
-            product: await ctx.db.get(item.productId),
-          }))
+          items.map(async (item) => {
+            const product = await ctx.db.get(item.productId);
+            if (!product) return { ...item, product: null };
+            let imageUrl = product.imageUrl ?? "";
+            if (product.storageId) {
+              imageUrl = (await ctx.storage.getUrl(product.storageId)) ?? imageUrl;
+            }
+            return { ...item, product: { ...product, imageUrl } };
+          })
         );
 
         return { ...order, items: itemsWithProducts };

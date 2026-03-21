@@ -5,9 +5,13 @@ import { UserJSON } from "@clerk/backend";
 export const upsertFromClerk = internalMutation({
   args: { data: v.any() as Validator<UserJSON> },
   async handler(ctx, { data }) {
+    const primaryEmail = data.email_addresses?.[0]?.email_address ?? "";
     const userAttributes = {
-      name: `${data.first_name} ${data.last_name}`,
+      name: `${data.first_name ?? ""} ${data.last_name ?? ""}`.trim(),
       externalId: data.id,
+      email: primaryEmail,
+      imageUrl: data.image_url ?? undefined,
+      role: "user" as const,
     };
 
     const user = await userByExternalId(ctx, data.id);

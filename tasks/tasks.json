@@ -24,37 +24,37 @@
     {
       "id": "T02",
       "title": "Convex 데이터베이스 스키마 정의",
-      "status": "pending",
+      "status": "done",
       "description": "convex/schema.ts에 전체 테이블 정의. Convex가 _id를 자동생성하므로 id 필드 미포함.",
       "subtasks": [
         {
           "id": "T02-1",
           "title": "users 테이블 스키마",
-          "status": "pending",
+          "status": "done",
           "fields": "clerkId, email, name, imageUrl, role('user'|'admin')"
         },
         {
           "id": "T02-2",
           "title": "products 테이블 스키마",
-          "status": "pending",
+          "status": "done",
           "fields": "name, description, price(number), imageUrl, stock(number)"
         },
         {
           "id": "T02-3",
           "title": "cartItems 테이블 스키마",
-          "status": "pending",
+          "status": "done",
           "fields": "userId(v.id('users')), productId(v.id('products')), quantity(number)"
         },
         {
           "id": "T02-4",
           "title": "orders 테이블 스키마",
-          "status": "pending",
+          "status": "done",
           "fields": "userId(v.id('users')), stripeSessionId, status('pending'|'paid'|'cancelled'), totalAmount(number)"
         },
         {
           "id": "T02-5",
           "title": "orderItems 테이블 스키마",
-          "status": "pending",
+          "status": "done",
           "fields": "orderId(v.id('orders')), productId(v.id('products')), quantity(number), price(number)"
         }
       ]
@@ -62,12 +62,12 @@
     {
       "id": "T03",
       "title": "인증 (Clerk)",
-      "status": "partial",
+      "status": "done",
       "description": "기본 로그인/로그아웃은 완료. 보호 라우트 미들웨어 확장 필요.",
       "subtasks": [
         { "id": "T03-1", "title": "로그인 / 로그아웃 / 회원가입 UI", "status": "done" },
         { "id": "T03-2", "title": "users.store mutation으로 Convex users 테이블 동기화", "status": "done" },
-        { "id": "T03-3", "title": "middleware에서 /cart, /orders 보호 라우트 추가", "status": "pending" }
+        { "id": "T03-3", "title": "middleware에서 /cart, /orders 보호 라우트 추가", "status": "done" }
       ]
     },
     {

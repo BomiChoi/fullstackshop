@@ -1,16 +1,48 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
-// The schema is entirely optional.
-// You can delete this file (schema.ts) and the
-// app will continue to work.
-// The schema provides more precise TypeScript types.
 export default defineSchema({
-  numbers: defineTable({
-    value: v.number(),
-  }),
   users: defineTable({
+    externalId: v.string(), // Clerk user ID
+    email: v.string(),
     name: v.string(),
-    externalId: v.string(),
+    imageUrl: v.optional(v.string()),
+    role: v.union(v.literal("user"), v.literal("admin")),
   }).index("byExternalId", ["externalId"]),
+
+  products: defineTable({
+    name: v.string(),
+    description: v.string(),
+    price: v.number(),
+    imageUrl: v.string(),
+    stock: v.number(),
+  }),
+
+  cartItems: defineTable({
+    userId: v.id("users"),
+    productId: v.id("products"),
+    quantity: v.number(),
+  })
+    .index("byUserId", ["userId"])
+    .index("byUserAndProduct", ["userId", "productId"]),
+
+  orders: defineTable({
+    userId: v.id("users"),
+    stripeSessionId: v.string(),
+    status: v.union(
+      v.literal("pending"),
+      v.literal("paid"),
+      v.literal("cancelled")
+    ),
+    totalAmount: v.number(),
+  })
+    .index("byUserId", ["userId"])
+    .index("byStripeSessionId", ["stripeSessionId"]),
+
+  orderItems: defineTable({
+    orderId: v.id("orders"),
+    productId: v.id("products"),
+    quantity: v.number(),
+    price: v.number(),
+  }).index("byOrderId", ["orderId"]),
 });

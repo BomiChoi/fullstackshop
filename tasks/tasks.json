@@ -73,93 +73,93 @@
     {
       "id": "T04",
       "title": "상품 백엔드 (Convex)",
-      "status": "pending",
+      "status": "done",
       "subtasks": [
-        { "id": "T04-1", "title": "convex/products.ts — listProducts query (전체 목록)", "status": "pending" },
-        { "id": "T04-2", "title": "convex/products.ts — getProduct query (단건 조회)", "status": "pending" },
-        { "id": "T04-3", "title": "convex/products.ts — seed mutation (초기 상품 데이터 삽입)", "status": "pending" }
+        { "id": "T04-1", "title": "convex/products.ts — listProducts query (전체 목록)", "status": "done" },
+        { "id": "T04-2", "title": "convex/products.ts — getProduct query (단건 조회)", "status": "done" },
+        { "id": "T04-3", "title": "convex/products.ts — seed mutation (초기 상품 데이터 삽입)", "status": "done" }
       ]
     },
     {
       "id": "T05",
       "title": "상품 프론트엔드",
-      "status": "pending",
+      "status": "done",
       "subtasks": [
-        { "id": "T05-1", "title": "app/page.tsx — 상품 목록 페이지 (카드 그리드)", "status": "pending" },
-        { "id": "T05-2", "title": "app/products/[id]/page.tsx — 상품 상세 페이지", "status": "pending" },
-        { "id": "T05-3", "title": "components/ProductCard.tsx — 상품 카드 컴포넌트", "status": "pending" }
+        { "id": "T05-1", "title": "app/page.tsx — 상품 목록 페이지 (카드 그리드)", "status": "done" },
+        { "id": "T05-2", "title": "app/products/[id]/page.tsx — 상품 상세 페이지", "status": "done" },
+        { "id": "T05-3", "title": "components/ProductCard.tsx — 상품 카드 컴포넌트", "status": "done" }
       ]
     },
     {
       "id": "T06",
       "title": "장바구니 백엔드 (Convex)",
-      "status": "pending",
+      "status": "done",
       "subtasks": [
-        { "id": "T06-1", "title": "convex/cart.ts — getCart query (현재 유저 장바구니)", "status": "pending" },
-        { "id": "T06-2", "title": "convex/cart.ts — addToCart mutation", "status": "pending" },
-        { "id": "T06-3", "title": "convex/cart.ts — updateQuantity mutation", "status": "pending" },
-        { "id": "T06-4", "title": "convex/cart.ts — removeFromCart mutation", "status": "pending" },
-        { "id": "T06-5", "title": "convex/cart.ts — clearCart mutation (결제 후 호출용)", "status": "pending" }
+        { "id": "T06-1", "title": "convex/cart.ts — getCart query (현재 유저 장바구니)", "status": "done" },
+        { "id": "T06-2", "title": "convex/cart.ts — addToCart mutation", "status": "done" },
+        { "id": "T06-3", "title": "convex/cart.ts — updateQuantity mutation", "status": "done" },
+        { "id": "T06-4", "title": "convex/cart.ts — removeFromCart mutation", "status": "done" },
+        { "id": "T06-5", "title": "convex/cart.ts — clearCart mutation (결제 후 호출용)", "status": "done" }
       ]
     },
     {
       "id": "T07",
       "title": "장바구니 프론트엔드",
-      "status": "pending",
+      "status": "done",
       "subtasks": [
-        { "id": "T07-1", "title": "app/cart/page.tsx — 장바구니 페이지", "status": "pending" },
-        { "id": "T07-2", "title": "components/CartItem.tsx — 아이템 수량 변경/삭제 UI", "status": "pending" },
-        { "id": "T07-3", "title": "헤더에 장바구니 아이콘 + 아이템 수 배지 표시", "status": "pending" }
+        { "id": "T07-1", "title": "app/cart/page.tsx — 장바구니 페이지", "status": "done" },
+        { "id": "T07-2", "title": "components/CartItem.tsx — 아이템 수량 변경/삭제 UI", "status": "done" },
+        { "id": "T07-3", "title": "헤더에 장바구니 아이콘 + 아이템 수 배지 표시", "status": "done" }
       ]
     },
     {
       "id": "T08",
       "title": "Stripe 결제 연동",
-      "status": "pending",
+      "status": "done",
       "description": "Stripe Checkout Session 생성 → Webhook으로 결제 확인 → 주문 상태 업데이트",
       "subtasks": [
-        { "id": "T08-1", "title": "Stripe 패키지 설치 (stripe, @stripe/stripe-js)", "status": "pending" },
-        { "id": "T08-2", "title": "환경변수 추가: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY", "status": "pending" },
-        { "id": "T08-3", "title": "app/api/checkout/route.ts — Checkout Session 생성 API", "status": "pending" },
-        { "id": "T08-4", "title": "app/api/webhook/route.ts — Stripe Webhook 처리 (서명 검증 필수)", "status": "pending" },
-        { "id": "T08-5", "title": "Webhook에서 checkout.session.completed 이벤트로 주문 생성", "status": "pending" },
-        { "id": "T08-6", "title": "app/cart/page.tsx — '결제하기' 버튼 → Checkout Session API 호출", "status": "pending" }
+        { "id": "T08-1", "title": "Stripe 패키지 설치 (stripe, @stripe/stripe-js)", "status": "done" },
+        { "id": "T08-2", "title": "환경변수 추가: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY", "status": "done" },
+        { "id": "T08-3", "title": "app/api/checkout/route.ts — Checkout Session 생성 API", "status": "done" },
+        { "id": "T08-4", "title": "app/api/webhook/route.ts — Stripe Webhook 처리 (서명 검증 필수)", "status": "done" },
+        { "id": "T08-5", "title": "Webhook에서 checkout.session.completed 이벤트로 주문 생성", "status": "done" },
+        { "id": "T08-6", "title": "app/cart/page.tsx — '결제하기' 버튼 → Checkout Session API 호출", "status": "done" }
       ]
     },
     {
       "id": "T09",
       "title": "주문 백엔드 (Convex)",
-      "status": "pending",
+      "status": "done",
       "subtasks": [
-        { "id": "T09-1", "title": "convex/orders.ts — createOrder mutation (Webhook에서 호출)", "status": "pending" },
-        { "id": "T09-2", "title": "convex/orders.ts — getMyOrders query (유저별 주문 목록)", "status": "pending" },
-        { "id": "T09-3", "title": "convex/orders.ts — updateOrderStatus mutation", "status": "pending" }
+        { "id": "T09-1", "title": "convex/orders.ts — createOrder mutation (Webhook에서 호출)", "status": "done" },
+        { "id": "T09-2", "title": "convex/orders.ts — getMyOrders query (유저별 주문 목록)", "status": "done" },
+        { "id": "T09-3", "title": "convex/orders.ts — updateOrderStatus mutation", "status": "done" }
       ]
     },
     {
       "id": "T10",
       "title": "주문 내역 프론트엔드",
-      "status": "pending",
+      "status": "done",
       "subtasks": [
-        { "id": "T10-1", "title": "app/orders/page.tsx — 주문 목록 (날짜, 금액, 상태)", "status": "pending" }
+        { "id": "T10-1", "title": "app/orders/page.tsx — 주문 목록 (날짜, 금액, 상태)", "status": "done" }
       ]
     },
     {
       "id": "T11",
       "title": "결제 결과 페이지",
-      "status": "pending",
+      "status": "done",
       "subtasks": [
-        { "id": "T11-1", "title": "app/success/page.tsx — 결제 성공 안내", "status": "pending" },
-        { "id": "T11-2", "title": "app/cancel/page.tsx — 결제 취소 안내", "status": "pending" }
+        { "id": "T11-1", "title": "app/success/page.tsx — 결제 성공 안내", "status": "done" },
+        { "id": "T11-2", "title": "app/cancel/page.tsx — 결제 취소 안내", "status": "done" }
       ]
     },
     {
       "id": "T12",
       "title": "공통 UI 컴포넌트 및 레이아웃",
-      "status": "pending",
+      "status": "done",
       "subtasks": [
-        { "id": "T12-1", "title": "app/layout.tsx — 공통 헤더 (로고, 장바구니, UserButton)", "status": "pending" },
-        { "id": "T12-2", "title": "components/Header.tsx — 분리된 헤더 컴포넌트", "status": "pending" }
+        { "id": "T12-1", "title": "app/layout.tsx — 공통 헤더 (로고, 장바구니, UserButton)", "status": "done" },
+        { "id": "T12-2", "title": "components/Header.tsx — 분리된 헤더 컴포넌트", "status": "done" }
       ]
     }
   ]

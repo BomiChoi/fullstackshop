@@ -14,10 +14,12 @@
   "dependencies": {
     "@clerk/clerk-react": "^5.61.3",
     "@clerk/nextjs": "^6.39.0",
+    "@stripe/stripe-js": "^8.11.0",
     "convex": "^1.33.1",
     "next": "^16.1.6",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "stripe": "^20.4.1",
     "svix": "^1.89.0"
   },
   "devDependencies": {

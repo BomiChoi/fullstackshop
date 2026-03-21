@@ -1,17 +1,83 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 
+// storageId → URL 해석 헬퍼
+async function resolveImageUrl(
+  ctx: { storage: { getUrl: (id: string) => Promise<string | null> } },
+  product: { imageUrl?: string; storageId?: string }
+): Promise<string> {
+  if (product.storageId) {
+    return (await ctx.storage.getUrl(product.storageId)) ?? product.imageUrl ?? "";
+  }
+  return product.imageUrl ?? "";
+}
+
 export const listProducts = query({
   args: {},
   handler: async (ctx) => {
-    return await ctx.db.query("products").collect();
+    const products = await ctx.db.query("products").collect();
+    return await Promise.all(
+      products.map(async (p) => ({
+        ...p,
+        imageUrl: await resolveImageUrl(ctx, p),
+      }))
+    );
   },
 });
 
 export const getProduct = query({
   args: { id: v.id("products") },
   handler: async (ctx, { id }) => {
-    return await ctx.db.get(id);
+    const p = await ctx.db.get(id);
+    if (!p) return null;
+    return { ...p, imageUrl: await resolveImageUrl(ctx, p) };
+  },
+});
+
+export const generateUploadUrl = mutation({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.storage.generateUploadUrl();
+  },
+});
+
+export const createProduct = mutation({
+  args: {
+    name: v.string(),
+    description: v.string(),
+    price: v.number(),
+    stock: v.number(),
+    storageId: v.optional(v.id("_storage")),
+    imageUrl: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.insert("products", args);
+  },
+});
+
+export const updateProduct = mutation({
+  args: {
+    id: v.id("products"),
+    name: v.string(),
+    description: v.string(),
+    price: v.number(),
+    stock: v.number(),
+    storageId: v.optional(v.id("_storage")),
+    imageUrl: v.optional(v.string()),
+  },
+  handler: async (ctx, { id, ...fields }) => {
+    await ctx.db.patch(id, fields);
+  },
+});
+
+export const deleteProduct = mutation({
+  args: { id: v.id("products") },
+  handler: async (ctx, { id }) => {
+    const product = await ctx.db.get(id);
+    if (product?.storageId) {
+      await ctx.storage.delete(product.storageId);
+    }
+    await ctx.db.delete(id);
   },
 });
 
@@ -19,7 +85,7 @@ export const seed = mutation({
   args: {},
   handler: async (ctx) => {
     const existing = await ctx.db.query("products").first();
-    if (existing) return; // 이미 데이터가 있으면 스킵
+    if (existing) return;
 
     const products = [
       {

@@ -14,7 +14,8 @@ export default defineSchema({
     name: v.string(),
     description: v.string(),
     price: v.number(),
-    imageUrl: v.string(),
+    imageUrl: v.optional(v.string()),        // 외부 URL (seed 데이터용)
+    storageId: v.optional(v.id("_storage")), // Convex Storage 업로드 이미지
     stock: v.number(),
   }),
 

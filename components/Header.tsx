@@ -29,6 +29,8 @@ function CartBadge() {
 
 export default function Header() {
   const { isSignedIn } = useUser();
+  const currentUser = useQuery(api.users.current, isSignedIn ? {} : "skip");
+  const isAdmin = currentUser?.role === "admin";
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
@@ -38,6 +40,14 @@ export default function Header() {
         </Link>
 
         <nav className="flex items-center gap-1">
+          {isAdmin && (
+            <Link
+              href="/admin/products"
+              className="px-3 py-2 text-sm text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors font-medium"
+            >
+              관리자
+            </Link>
+          )}
           {isSignedIn && (
             <Link
               href="/orders"
